@@ -157,21 +157,87 @@ def roundMatrix(matrix):
 
     for i in range(len(matrix)):
         row = []
-        for j in range(len(matrix[i])):
-            row.append(round(matrix[i][j], 9))
-        newMatrix.append(row)
+
+        if  isinstance(matrix[i], list):
+            for j in range(len(matrix[i])):
+                row.append(round(matrix[i][j], 9))
+            newMatrix.append(row)
+
+        else:
+            row.append(round(matrix[i], 9))
+            newMatrix.append(row)
 
     return newMatrix
 
+def matrixMult(A, B):
+
+    if not len(A[0]) == len(B):
+        print("cannot mult")
+        quit()
+
+    newMat = []
+    
+    for i in range(len(A)):
+        row = []
+        for j in range(len(B[0])):
+            row.append(matrixMultHelper(getRow(A, i), getCol(B, j)))
+        newMat.append(row)
+
+    return newMat
+
+def getCol(matrix, col):
+    vector = []
+    
+    for i in range(len(matrix)):
+        row = []
+        row.append(matrix[i][col])
+        vector.append(row)
+    
+    return vector
+
+def getRow(matrix, row):
+    return matrix[row]
+
+def matrixMultHelper(rowList, colList):
+    sum = 0
+    for i in range(len(rowList)):
+        sum = sum + rowList[i] * colList[i][0]
+    return sum
+
+            
+    
+
+
+
 
 matrix = [[4, 1, -5], [-2, 3, 1], [3, -1, 4]]
-#matrix = [[1,4,3,2],[5,6,7,1],[9,10,11,12],[13,14,15,17]]
-#matrix = [[1,4,3,2,7],[5,6,7,1,3],[9,10,11,12,2],[13,14,15,17,31],[13,4,1,17,31]]
-#matrix = [[5,9,2],[1,8,5],[3,6,4]]
-#matrix = [[5,9,2],[1,8,5],[3,6,4],[3,6,4]]
+B = [[8],[12],[5]]
+
 printMatrix(matrix)
 print("")
-printMatrix(inverseMatrix(matrix))
+printMatrix(B)
 print("")
-identityMatrix = np.matmul(matrix, inverseMatrix(matrix))
-printMatrix(roundMatrix(identityMatrix))
+printMatrix(matrixMult(matrix, B))
+print("")
+printMatrix(np.matmul(matrix,B))
+
+
+
+#matrix = [[1,4,3,2],[5,6,7,1],[9,10,11,12],[13,14,15,17]]
+# #matrix = [[1,4,3,2,7],[5,6,7,1,3],[9,10,11,12,2],[13,14,15,17,31],[13,4,1,17,31]]
+# #matrix = [[5,9,2],[1,8,5],[3,6,4]]
+# #matrix = [[5,9,2],[1,8,5],[3,6,4],[3,6,4]]
+# printMatrix(matrix)
+# print("")
+# invMat = inverseMatrix(matrix)
+# printMatrix(invMat)
+# print("")
+# vector = np.matmul(invMat, B)
+# printMatrix(roundMatrix(vector))
+# print("")
+# randomData = np.random.rand(50,3)
+# print(randomData)
+
+# coefficents = np.matmul(randomData, vector)
+
+# printMatrix(coefficents)
