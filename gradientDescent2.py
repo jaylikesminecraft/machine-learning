@@ -1,6 +1,5 @@
 import random
 
-
 def transpose(matrix):
     newMatrix = []
     newRow = []
@@ -21,7 +20,6 @@ def transposeVector(vector):
         newVector.append(row)
 
     return newVector
-
 
 def matrixMult(A, B):
 
@@ -57,6 +55,10 @@ def matrixMultHelper(rowList, colList):
     for i in range(len(rowList)):
         sum = sum + rowList[i] * colList[i][0]
     return sum
+
+def printMatrix(matrix):
+    for i in range(len(matrix)):
+        print(matrix[i])
       
 def gradientDescentFunction(y, data, iterations, learningRate, bTerms):
 
@@ -65,7 +67,6 @@ def gradientDescentFunction(y, data, iterations, learningRate, bTerms):
             bTerms[k] = bTerms[k] - learningRate * derivativeB(y, data, k, bTerms)
 
     return bTerms
-
 
 def makeData(rows, cols):
     data = []
@@ -78,10 +79,6 @@ def makeData(rows, cols):
         data.append(row)
     
     return data
-
-def printMatrix(matrix):
-    for i in range(len(matrix)):
-        print(matrix[i])
 
 def derivativeB(Y, data, bTerm, bTerms):
     totalSum = 0
@@ -97,23 +94,21 @@ def derivativeB(Y, data, bTerm, bTerms):
 
     return totalSum * (-0.5)
 
-
-bterms = [0,0,0]
 learning_rate = 0.01
-iterations = 1000
+iterations = 30
 
-real_B_coefficents = [1,2,5]
-data = makeData(100,2)
+real_B_coefficents = [1,2,5,6]
+data = makeData(100,3)
 asdf = matrixMult(data, transposeVector(real_B_coefficents))
 
 y = []
 
 for i in range(len(asdf)):
     row = []
-    row.append(asdf[i][0]+ random.gauss())
+    row.append(asdf[i][0])#+ random.gauss())
     y.append(row)
 
-bTerms = [0,0,0]
+bTerms = [0,0,0,0]
 print(gradientDescentFunction(y, data, iterations, 0.01, bTerms))
 
 
